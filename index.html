@@ -1,0 +1,589 @@
+<title>AppRubric — Sistema Integral de Gestión Evaluativa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --ink: #142842;
+    --ink-soft: #4c5f7a;
+    --paper: #F2F4F3;
+    --paper-raised: #FFFFFF;
+    --rule: #CDD5D0;
+    --rule-strong: #9FB0A8;
+    --gold: #A9781F;
+    --gold-soft: #E7D3A6;
+    --teal: #2C6B5F;
+    --teal-soft: #DCEAE5;
+    --rose: #9C3E33;
+    --rose-soft: #F1DCD7;
+    --shadow: 0 18px 40px -22px rgba(20,40,66,0.35);
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9EDF0;
+    --ink-soft: #AEBBC9;
+    --paper: #0F1A28;
+    --paper-raised: #16263A;
+    --rule: #2A3C51;
+    --rule-strong: #3D5470;
+    --gold: #DCB055;
+    --gold-soft: #4A3B1E;
+    --teal: #59B0A0;
+    --teal-soft: #163530;
+    --rose: #E08A7C;
+    --rose-soft: #3A211E;
+    --shadow: 0 18px 44px -20px rgba(0,0,0,0.6);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #E9EDF0;
+      --ink-soft: #AEBBC9;
+      --paper: #0F1A28;
+      --paper-raised: #16263A;
+      --rule: #2A3C51;
+      --rule-strong: #3D5470;
+      --gold: #DCB055;
+      --gold-soft: #4A3B1E;
+      --teal: #59B0A0;
+      --teal-soft: #163530;
+      --rose: #E08A7C;
+      --rose-soft: #3A211E;
+      --shadow: 0 18px 44px -20px rgba(0,0,0,0.6);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .display { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; }
+  .mono { font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-variant-numeric: tabular-nums; }
+
+  a { color: inherit; }
+  img { max-width: 100%; }
+
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Header ---------- */
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .seal {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    font-weight: 700; font-size: 15px; color: var(--gold);
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 3px transparent;
+  }
+  .brand-name { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 21px; letter-spacing: 0.01em; }
+  .brand-name b { font-weight: 700; }
+  .nav-tag { font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: 72px 0 56px;
+    background-image: repeating-linear-gradient(
+      to bottom, transparent, transparent 37px, var(--rule) 38px
+    );
+    background-position: 0 8px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 18px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1.5px; background: var(--gold); display: inline-block; }
+  h1.hero-title {
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.08;
+    margin: 0 0 20px;
+    text-wrap: balance;
+    max-width: 14ch;
+  }
+  h1.hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 18px; color: var(--ink-soft); max-width: 56ch; margin: 0 0 34px;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 24px; border-radius: 3px; font-size: 15px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: 1px solid transparent;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  :root[data-theme="dark"] .btn-primary, @media (prefers-color-scheme: dark) { }
+  .btn-primary { box-shadow: var(--shadow); }
+  .btn-ghost { border-color: var(--rule-strong); color: var(--ink); background: transparent; }
+
+  /* ---------- Ledger demo card ---------- */
+  .ledger {
+    margin-top: 52px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .ledger-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 18px 26px; border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, var(--paper-raised), var(--paper));
+  }
+  .ledger-head .lh-title { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 17px; }
+  .ledger-head .lh-meta { font-size: 12.5px; color: var(--ink-soft); }
+  .ledger-body { padding: 22px 26px 26px; }
+  .indicator-row { margin-bottom: 22px; }
+  .indicator-row:last-child { margin-bottom: 0; }
+  .indicator-label {
+    font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 10px; display: flex; justify-content: space-between;
+  }
+  .criteria-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .criterio-card {
+    border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px;
+    background: var(--paper);
+  }
+  .criterio-type { font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .criterio-score { display: flex; align-items: baseline; gap: 8px; }
+  .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 3px;
+    font-family: ui-monospace, Consolas, monospace;
+  }
+  .badge-aa { background: var(--teal-soft); color: var(--teal); }
+  .badge-as { background: var(--teal-soft); color: var(--teal); opacity: .82; }
+  .badge-af { background: var(--gold-soft); color: var(--gold); }
+  .badge-ai { background: var(--rose-soft); color: var(--rose); }
+  .criterio-pts { font-size: 15px; font-weight: 600; }
+  .ledger-total {
+    margin-top: 20px; padding-top: 16px; border-top: 1.5px dashed var(--rule-strong);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .ledger-total .tot-label { font-size: 13.5px; color: var(--ink-soft); }
+  .ledger-total .tot-value { font-size: 26px; font-family: ui-monospace, Consolas, monospace; font-weight: 700; }
+  .ledger-total .tot-value .qual { color: var(--teal); font-size: 17px; margin-left: 8px; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+  .section-tag {
+    font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 12px;
+  }
+  h2.section-title {
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    font-size: clamp(26px, 3.4vw, 34px); margin: 0 0 18px; text-wrap: balance;
+  }
+  .lede { font-size: 17px; color: var(--ink-soft); max-width: 62ch; margin-bottom: 8px; }
+
+  /* Reto: marginal notes */
+  .notes { display: grid; gap: 0; margin-top: 34px; }
+  .note {
+    display: grid; grid-template-columns: 90px 1fr; gap: 24px;
+    padding: 22px 0; border-top: 1px solid var(--rule);
+  }
+  .note:last-child { border-bottom: 1px solid var(--rule); }
+  .note-tag { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; color: var(--rose); padding-top: 3px; }
+  .note-body p { margin: 0; max-width: 60ch; color: var(--ink); }
+  .note-body .note-head { font-weight: 600; margin-bottom: 4px; }
+
+  /* Solucion — sheets */
+  .sheet {
+    background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 30px 32px; margin-top: 24px; box-shadow: var(--shadow);
+  }
+  .sheet-index {
+    font-family: ui-monospace, Consolas, monospace; font-size: 12px; color: var(--gold);
+    letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .sheet h3 {
+    font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 22px; margin: 0 0 12px;
+  }
+  .sheet p { color: var(--ink-soft); margin: 0 0 12px; max-width: 68ch; }
+  .sheet p:last-child { margin-bottom: 0; }
+  .sheet strong { color: var(--ink); }
+
+  table.data {
+    width: 100%; border-collapse: collapse; margin: 18px 0 6px; font-size: 14.5px;
+  }
+  table.data caption { text-align: left; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 8px; }
+  table.data th, table.data td {
+    text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--rule);
+  }
+  table.data thead th {
+    background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: .04em;
+    text-transform: uppercase; font-weight: 600;
+  }
+  table.data tbody tr:nth-child(even) { background: var(--paper); }
+  table.data td.num, table.data th.num { font-family: ui-monospace, Consolas, monospace; text-align: center; }
+  .table-scroll { overflow-x: auto; }
+
+  .roles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  @media (max-width: 640px) { .roles-grid { grid-template-columns: 1fr; } }
+  .role-card { border: 1px solid var(--rule); border-radius: 5px; padding: 14px 16px; }
+  .role-name { font-weight: 700; font-size: 14.5px; margin-bottom: 4px; }
+  .role-desc { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* Beneficios */
+  .benefits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 30px; }
+  @media (max-width: 700px) { .benefits { grid-template-columns: 1fr; } }
+  .benefit {
+    padding: 22px 22px 20px; border-left: 2px solid var(--gold);
+    background: var(--paper-raised); border-radius: 0 5px 5px 0;
+  }
+  .benefit h4 { margin: 0 0 6px; font-size: 15.5px; }
+  .benefit p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+
+  /* Diferencia */
+  .differentiators { margin-top: 30px; }
+  .diff-item {
+    display: flex; gap: 16px; padding: 18px 0; border-top: 1px solid var(--rule);
+  }
+  .diff-item:last-child { border-bottom: 1px solid var(--rule); }
+  .diff-mark { color: var(--teal); font-size: 18px; line-height: 1.5; }
+  .diff-text p { margin: 0; }
+  .diff-text .diff-head { font-weight: 600; margin-bottom: 2px; }
+
+  /* CTA / seal */
+  .cta {
+    text-align: center; padding: 76px 0 88px;
+  }
+  .cta-seal {
+    width: 96px; height: 96px; border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 26px;
+    position: relative;
+  }
+  .cta-seal::before {
+    content: ""; position: absolute; inset: 7px; border-radius: 50%;
+    border: 1px dashed var(--gold-soft);
+  }
+  .cta-seal span {
+    font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 12px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--gold); text-align: center;
+  }
+  .cta h2 { max-width: 20ch; margin: 0 auto 14px; }
+  .cta .lede { margin: 0 auto 34px; }
+  .contact-line {
+    margin-top: 30px; font-size: 15px; color: var(--ink-soft);
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+  }
+  .contact-line b { color: var(--ink); font-size: 16px; }
+  .contact-line .contact-tag {
+    font-size: 13px; color: var(--gold); font-style: italic;
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+  }
+  .contact-line .contact-details a { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 2px; }
+  .contact-line .contact-details a:hover { color: var(--ink); }
+
+  footer.site {
+    padding: 28px 0 40px; text-align: center; font-size: 12.5px; color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+
+  @media (max-width: 620px) {
+    .criteria-grid { grid-template-columns: 1fr; }
+    .note { grid-template-columns: 1fr; gap: 6px; }
+    section { padding: 48px 0; }
+    .hero { padding: 52px 0 40px; }
+  }
+</style>
+
+<header class="site">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+    <div class="brand">
+      <div class="seal">AR</div>
+      <div class="brand-name">App<b>Rubric</b></div>
+    </div>
+    <div class="nav-tag">Propuesta para Centros Educativos · Nicaragua</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Alineado al Instructivo de Evaluación del MINED</div>
+    <h1 class="hero-title display">El cuaderno de registro, <em>resuelto</em>.</h1>
+    <p class="hero-sub">Un sistema construido artículo por artículo sobre el Capítulo V del MINED — diseño de instrumentos con apoyo de inteligencia artificial, cálculo automático de notas, cierre de corte, análisis de resultados y un portal para las familias. Validado en un centro educativo nicaragüense en operación real.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="mailto:adavilam@gmail.com?subject=Demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener" onclick="return handleDemoClick(event, this)">Solicitar una demostración</a>
+      <a class="btn btn-ghost" href="#solucion">Ver cómo funciona ↓</a>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-head">
+        <div class="lh-title">Cuaderno de Registro — Corte III · Séptimo Grado C</div>
+        <div class="lh-meta mono">Lengua y Literatura</div>
+      </div>
+      <div class="ledger-body">
+        <div class="indicator-row">
+          <div class="indicator-label"><span>Indicador de Logro 3 — Comprensión lectora</span><span class="mono">/ 15 pts</span></div>
+          <div class="criteria-grid">
+            <div class="criterio-card">
+              <div class="criterio-type">Criterio 1 · Conceptual</div>
+              <div class="criterio-score"><span class="badge badge-aa">AA</span><span class="criterio-pts mono">5 / 5</span></div>
+            </div>
+            <div class="criterio-card">
+              <div class="criterio-type">Criterio 2 · Procedimental</div>
+              <div class="criterio-score"><span class="badge badge-as">AS</span><span class="criterio-pts mono">4 / 5</span></div>
+            </div>
+            <div class="criterio-card">
+              <div class="criterio-type">Criterio 3 · Actitudinal</div>
+              <div class="criterio-score"><span class="badge badge-aa">AA</span><span class="criterio-pts mono">5 / 5</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ledger-total">
+          <span class="tot-label">Nota de Corte (calculada automáticamente)</span>
+          <span class="tot-value mono">94<span class="qual display">AA</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-tag">El reto</div>
+    <h2 class="section-title display">Lo que hoy le cuesta al centro educativo</h2>
+    <p class="lede">El Capítulo V del Instructivo de Evaluación (Arto. 21 al 32) es exigente por diseño: escalas cualitativas y cuantitativas simultáneas, ponderaciones distintas por indicador, metodologías especiales por materia, y procedimientos formales de excepción — todo de forma consistente, corte tras corte, salón por salón.</p>
+    <div class="notes">
+      <div class="note">
+        <div class="note-tag">01 — Cálculo</div>
+        <div class="note-body"><p class="note-head">El cuaderno manual acumula errores.</p><p>Convertir AA/AS/AF/AI a puntaje, sumar 4 o 5 indicadores y cerrar el corte a mano deja margen para el error aritmético, corte tras corte.</p></div>
+      </div>
+      <div class="note">
+        <div class="note-tag">02 — Trazabilidad</div>
+        <div class="note-body"><p class="note-head">Ante una visita de supervisión, faltan respaldos.</p><p>No siempre queda claro qué instrumento generó cada nota, ni quién autorizó su uso en el aula.</p></div>
+      </div>
+      <div class="note">
+        <div class="note-tag">03 — Visibilidad</div>
+        <div class="note-body"><p class="note-head">Dirección no ve el avance hasta el cierre.</p><p>Y las familias dependen de reportes impresos o mensajes informales para conocer el progreso real de sus hijos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solucion">
+  <div class="wrap">
+    <div class="section-tag">La solución</div>
+    <h2 class="section-title display">AppRubric, de principio a fin</h2>
+    <p class="lede">Catorce piezas que cubren el ciclo evaluativo completo, cada una construida sobre un artículo específico del Instructivo de Evaluación.</p>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 1</div>
+      <h3>Diseño y autorización de instrumentos</h3>
+      <p>Cada instrumento —rúbrica analítica, guía de observación, escala de valoración o lista de cotejo— cubre los tres criterios de evaluación (conceptual, procedimental y actitudinal), respetando la correspondencia oficial Criterio 1/2/3 del Ministerio.</p>
+      <p>El <strong>Asistente Docente</strong>, con inteligencia artificial, ayuda al docente a preparar su plan de clase, diseñar el instrumento alineado a la normativa y redactar la guía del estudiante. La IA propone, el docente decide y <strong>el servidor valida</strong> que el instrumento cumpla la estructura del MINED antes de aceptarlo.</p>
+      <p>Un instrumento nuevo se usa en el aula solo después de que <strong>Dirección o Coordinación lo autoriza</strong> — control de calidad pensado para la visita de supervisión. Además, el sistema impide repetir un Indicador, o los mismos criterios y niveles de otro ya evaluado en el mismo salón y materia; solo el Director puede registrar una excepción.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 2</div>
+      <h3>Motor de cálculo automático — Capítulo V</h3>
+      <p>Toda nota respeta, sin excepción, las reglas del Instructivo de Evaluación.</p>
+      <div class="table-scroll">
+        <table class="data">
+          <caption>Conversión cualitativa ↔ cuantitativa (Arto. 21)</caption>
+          <thead><tr><th>Escala</th><th class="num">Rango</th><th>Significado</th><th class="num">Ponderación</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">AA</td><td class="num mono">90–100</td><td>Aprendizaje Avanzado</td><td class="num mono">100%</td></tr>
+            <tr><td class="mono">AS</td><td class="num mono">76–89</td><td>Aprendizaje Satisfactorio</td><td class="num mono">80%</td></tr>
+            <tr><td class="mono">AF</td><td class="num mono">60–75</td><td>Aprendizaje Fundamental</td><td class="num mono">60%</td></tr>
+            <tr><td class="mono">AI</td><td class="num mono">&lt;60</td><td>Aprendizaje Inicial</td><td class="num mono">40%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-scroll">
+        <table class="data">
+          <caption>Estructura del corte evaluativo (Arto. 23–24)</caption>
+          <thead><tr><th>Componente</th><th class="num">Puntaje</th><th>Origen</th></tr></thead>
+          <tbody>
+            <tr><td>Indicadores de Logro (4 o 5, según modalidad)</td><td class="num mono">60 pts</td><td>Instrumentos por criterio</td></tr>
+            <tr><td>Revisión del Cuaderno del Alumno *</td><td class="num mono">10 pts</td><td>Captura manual</td></tr>
+            <tr><td>Evaluación Final del Corte</td><td class="num mono">30 pts</td><td>Manual o CSV</td></tr>
+            <tr><td><strong>Total del corte</strong></td><td class="num mono"><strong>100 pts</strong></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px;color:var(--ink-soft);font-style:italic;margin-top:-4px;">* Corresponde a las reglas particulares del centro educativo que hoy opera AppRubric. El sistema impone la estructura de puntos de cada materia (siempre suma 100) y se <strong style="color:var(--ink-soft);">adapta a la normativa de cada institución</strong> durante la implementación.</p>
+      <p>Incluye metodología <strong>NICAMATE</strong> para Matemática en Secundaria, materias mixtas (Arto. 24), Desempeño Personal 100% cualitativo evaluado por el Docente Guía (Arto. 28), predominancia cualitativa con desempate a favor del estudiante (Arto. 23 y 29), y gestión formal de excepciones con aprobación del Director (Arto. 32).</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 3</div>
+      <h3>Cuaderno de Registro digital</h3>
+      <p>La misma estructura que ya conoce el docente, calculada en vivo: cada indicador con sus 3 criterios, nota cualitativa y cuantitativa a la vez, subtotales, acumulado y nota de corte — trazable hasta el instrumento que la originó.</p>
+      <p>Una vez cerrado el corte, <strong>ninguna nota se modifica en silencio</strong>: cualquier ajuste requiere reapertura formal y justificada, exclusiva del Director, que queda registrada de forma permanente.</p>
+      <p><strong>Respaldo en PDF:</strong> cada instrumento de evaluación puede descargarse en PDF para el docente, y Registro Académico cuenta con descarga exclusiva del Consolidado Anual oficial — soporte listo para archivo institucional o entrega a supervisión.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 4</div>
+      <h3>Movilidad y continuidad sin conexión</h3>
+      <p>Todo el proceso de evaluación —desde la captura de notas hasta el seguimiento de Coordinación— funciona igual desde una computadora portátil que desde el navegador de un teléfono móvil, sin necesidad de instalar una aplicación aparte.</p>
+      <p><strong>Continuidad sin conexión:</strong> si el centro educativo no cuenta con internet estable, o el docente evalúa fuera de línea, la captura de notas se guarda en el propio dispositivo y se sincroniza automáticamente con el sistema en cuanto se recupera la conexión, sin perder ni duplicar información.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 5</div>
+      <h3>Portal de resultados — estudiantes y familias</h3>
+      <p>Acceso propio, sencillo y sin fricción para consultar en tiempo real notas por corte, por indicador, promedio anual e hitos de progreso — sustituyendo reportes impresos y mensajes informales por acceso directo y permanente.</p>
+      <p><strong>"Mi Progreso":</strong> el estudiante ve gráficas de sus notas por corte y de su avance por materia, cada una con su color, además de sus resultados cualitativos. Ingresa con un código de acceso, sin necesidad de una cuenta de correo, y puede volver a entrar sin bloqueos.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 6</div>
+      <h3>Análisis pedagógico con inteligencia artificial</h3>
+      <p>Dirección y Coordinación consultan, por grado, materia y corte, en qué indicadores los estudiantes necesitan más apoyo y qué docentes van atrasados con el cronograma. Cada docente puede, además, analizar sus propias secciones, por indicador o del ciclo completo.</p>
+      <p>La inteligencia artificial redacta el diagnóstico a partir de las notas ya registradas: es un apoyo para la conversación pedagógica, <strong>no una decisión automática</strong>. El informe se descarga en PDF, y las acciones acordadas con el docente quedan en un Plan de Implementación con seguimiento.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 7</div>
+      <h3>Asistencia diaria y reportes al MINED</h3>
+      <p>El docente pasa lista desde la computadora o el celular. El sistema genera la lista de asistencia descargable de cada salón y el reporte diario de asistencia para el MINED, disponible para Dirección, Coordinación y Registro Académico.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 8</div>
+      <h3>Integración con aulas virtuales</h3>
+      <p><strong>Moodle:</strong> AppRubric crea y mantiene en Moodle las aulas por nivel y grado, los usuarios y las matrículas, a partir de la estructura que el centro ya tiene en el sistema. Docentes y estudiantes ingresan con su cuenta institucional de Google.</p>
+      <p><strong>Google Classroom (a la medida):</strong> las evaluaciones por rúbrica calificadas en Classroom se importan a AppRubric desagregadas por criterio —conceptual, procedimental y actitudinal—, con la misma autorización de Dirección y el mismo cálculo de nota. Para centros con Google Workspace for Education.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 9</div>
+      <h3>Acompañamiento al docente</h3>
+      <p><strong>Registro Manual:</strong> para el docente que lleva su cuaderno en papel, un asistente guiado permite ingresar las notas que ya calificó; el sistema las incorpora al Cuaderno de Registro y calcula la nota.</p>
+      <p><strong>Salón de Prueba:</strong> un aula de práctica donde cualquier docente puede crear instrumentos y capturar notas antes de usar el sistema con sus salones reales, sin afectar ningún dato oficial.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 10</div>
+      <h3>Ciudadela Escolar — formación en valores · Próximamente</h3>
+      <p><strong>Estado:</strong> módulo probado en un piloto con un grado; su despliegue general está previsto para el año lectivo 2027.</p>
+      <p>Un módulo de gamificación educativa que va más allá del registro de incidentes: los estudiantes cumplen misiones evaluables ligadas a los valores institucionales, acumulando reconocimiento por su desempeño y manteniendo un indicador de bienestar conductual que refleja su evolución a lo largo del corte.</p>
+      <p><strong>No es solo un registro de faltas:</strong> es un sistema de acompañamiento activo. Ante una falta grave se notifica automáticamente a Dirección y al Profesor Guía, pero el corazón del sistema son las misiones que reconocen y refuerzan el comportamiento positivo del estudiante, no únicamente el que corrige el negativo.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 11</div>
+      <h3>Cronograma de Evaluación</h3>
+      <p>Dirección registra, por corte, la fecha límite de cada indicador de logro y la fecha de cierre por materia. Ese calendario alimenta un panel de <strong>"Docentes Atrasados"</strong> visible desde el escritorio de Dirección, Coordinación y Administración — visibilidad en tiempo real de qué salones van al día y cuáles no.</p>
+      <p>Es un candado de un solo sentido: <strong>no bloquea</strong> la captura de una nota atrasada, solo la hace imposible de ignorar. La decisión de qué hacer con un atraso sigue siendo humana, del equipo directivo.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 12</div>
+      <h3>Excepciones formales (Arto. 32)</h3>
+      <p>Cuando un estudiante no logra completar una valoración por una causa justificada — enfermedad, situación familiar, entre otras — el sistema replica exactamente el procedimiento del Instructivo: el espacio queda visible como pendiente, nunca vacío sin explicación, y solo el <strong>Director</strong> puede autorizar tanto la excepción inicial como la posterior habilitación para completar la nota una vez resuelta la situación.</p>
+      <p>Mientras la excepción esté abierta, el sistema impide cerrar el corte de ese estudiante — la trazabilidad de la norma queda incorporada al flujo, no depende de que alguien recuerde revisarla a mano.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 13</div>
+      <h3>Práctica Adaptativa con Inteligencia Artificial</h3>
+      <p>Un motor formativo de cuestionarios adaptativos — inferencia bayesiana y entropía de Shannon — disponible para cualquier docente que quiera reforzar el aprendizaje de sus estudiantes entre evaluaciones oficiales, ajustando la dificultad de cada pregunta según el desempeño real del alumno.</p>
+      <p><strong>Deliberadamente separado del Capítulo V:</strong> es formativo, no oficial — nunca toca el cuaderno de registro ni la nota de corte. Cada docente lo activa quien quiere usarlo, sin afectar a quienes prefieren evaluar solo con los instrumentos tradicionales.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-index">Pieza 14</div>
+      <h3>Panel administrativo y roles</h3>
+      <p>Solo cuentas previamente autorizadas por Dirección pueden ingresar, con inicio de sesión seguro vía Google. Cada rol tiene exactamente el alcance que necesita:</p>
+      <div class="roles-grid">
+        <div class="role-card"><div class="role-name">Director</div><div class="role-desc">Toda la entidad: autoriza, resuelve excepciones, reabre cortes.</div></div>
+        <div class="role-card"><div class="role-name">Coordinador</div><div class="role-desc">Solo los salones/grados bajo su alcance definido.</div></div>
+        <div class="role-card"><div class="role-name">Docente</div><div class="role-desc">Sus materias y salones asignados.</div></div>
+        <div class="role-card"><div class="role-name">Profesor Guía</div><div class="role-desc">Desempeño Personal y consolidado de su salón.</div></div>
+        <div class="role-card"><div class="role-name">Registro Académico</div><div class="role-desc">Toda la entidad, solo lectura y descarga.</div></div>
+        <div class="role-card"><div class="role-name">Administrador</div><div class="role-desc">Usuarios, salones, catálogo y configuración.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-tag">Beneficios</div>
+    <h2 class="section-title display">Lo que cambia para el centro</h2>
+    <div class="benefits">
+      <div class="benefit"><h4>Ahorro real de tiempo docente</h4><p>El cálculo de notas y la sumatoria de corte dejan de hacerse a mano.</p></div>
+      <div class="benefit"><h4>Cero errores de cálculo</h4><p>Toda nota se deriva automáticamente de las reglas oficiales del MINED.</p></div>
+      <div class="benefit"><h4>Cumplimiento normativo garantizado</h4><p>Cada nota respeta el Capítulo V desde su origen, no como ajuste posterior.</p></div>
+      <div class="benefit"><h4>Trazabilidad ante supervisión</h4><p>Instrumento, nota y excepción quedan documentados y listos para auditoría.</p></div>
+      <div class="benefit"><h4>Mejor comunicación con familias</h4><p>El Portal de Resultados sustituye reportes impresos y avisos informales.</p></div>
+      <div class="benefit"><h4>Información centralizada</h4><p>Dirección ve el avance real de docentes y salones desde un solo panel.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-tag">Por qué AppRubric</div>
+    <h2 class="section-title display">No es un sistema adaptado. Es un sistema nacido de esto.</h2>
+    <div class="differentiators">
+      <div class="diff-item"><div class="diff-mark">✓</div><div class="diff-text"><div class="diff-head">Construido sobre la norma, no sobre un genérico</div><p>Cada regla del Instructivo de Evaluación —artículo por artículo— es parte del motor, no un ajuste posterior.</p></div></div>
+      <div class="diff-item"><div class="diff-mark">✓</div><div class="diff-text"><div class="diff-head">Validado en operación real</div><p>Con datos reales, en un centro educativo nicaragüense en funcionamiento diario — no una maqueta ni un prototipo comercial.</p></div></div>
+      <div class="diff-item"><div class="diff-mark">✓</div><div class="diff-text"><div class="diff-head">Nacido de necesidades reales</div><p>La gestión de excepciones, el candado de cierre de corte y la autorización de instrumentos surgieron de situaciones concretas de un colegio en funcionamiento.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="cta-seal"><span>Listo<br/>para<br/>revisión</span></div>
+    <h2 class="section-title display">Una demostración con los datos de su propio centro</h2>
+    <p class="lede">Dirección y su equipo docente pueden evaluar AppRubric con la estructura real de grados, secciones y materias de su centro educativo, antes de tomar cualquier decisión.</p>
+    <a class="btn btn-primary" href="mailto:adavilam@gmail.com?subject=Demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener" onclick="return handleDemoClick(event, this)">Escribir para coordinar una demostración</a>
+    <a class="btn btn-ghost" href="https://wa.me/50558196269?text=Hola%2C%20quisiera%20una%20demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <div class="contact-line">
+      <b>Alvaro Dávila M</b>
+      <span class="contact-tag">Innovación Educativa · Inteligencia Artificial aplicada a la Educación</span>
+      <span class="contact-details"><span id="emailText">adavilam@gmail.com</span> · <a href="tel:+50558196269">Cel: 5819 6269</a> · <a href="https://www.facebook.com/AppRubric" target="_blank" rel="noopener">Facebook: AppRubric</a></span>
+    </div>
+  </div>
+</section>
+
+<footer class="site">AppRubric — Sistema Integral de Gestión Evaluativa · Alineado al Instructivo de Evaluación del MINED, Nicaragua</footer>
+
+<script>
+  function handleDemoClick(evt, el) {
+    var original = el.textContent;
+    var mailUrl = el.getAttribute('href');
+    var opened = false;
+    try {
+      var win = window.open(mailUrl, '_blank');
+      opened = !!win;
+    } catch (e) { opened = false; }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText('adavilam@gmail.com').catch(function () {});
+    }
+
+    el.textContent = '✓ Correo copiado — adavilam@gmail.com';
+    setTimeout(function () { el.textContent = original; }, 3200);
+
+    // Let the mailto href continue as a normal navigation attempt too
+    // (harmless if blocked by the surrounding sandbox; the copy above
+    // is the guaranteed fallback).
+    return true;
+  }
+</script>
