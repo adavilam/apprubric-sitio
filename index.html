@@ -322,7 +322,7 @@
     <h1 class="hero-title display">El cuaderno de registro, <em>resuelto</em>.</h1>
     <p class="hero-sub">Un sistema construido artículo por artículo sobre el Capítulo V del MINED — diseño de instrumentos con apoyo de inteligencia artificial, cálculo automático de notas, cierre de corte, análisis de resultados y un portal para las familias. Validado en un centro educativo nicaragüense en operación real.</p>
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="mailto:adavilam@gmail.com?subject=Demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener" onclick="return handleDemoClick(event, this)">Solicitar una demostración</a>
+      <a class="btn btn-primary" href="https://wa.me/50558196269?text=Hola%2C%20quisiera%20una%20demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener">Solicitar una demostración</a>
       <a class="btn btn-ghost" href="#solucion">Ver cómo funciona ↓</a>
     </div>
 
@@ -552,38 +552,13 @@
     <div class="cta-seal"><span>Listo<br/>para<br/>revisión</span></div>
     <h2 class="section-title display">Una demostración con los datos de su propio centro</h2>
     <p class="lede">Dirección y su equipo docente pueden evaluar AppRubric con la estructura real de grados, secciones y materias de su centro educativo, antes de tomar cualquier decisión.</p>
-    <a class="btn btn-primary" href="mailto:adavilam@gmail.com?subject=Demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener" onclick="return handleDemoClick(event, this)">Escribir para coordinar una demostración</a>
-    <a class="btn btn-ghost" href="https://wa.me/50558196269?text=Hola%2C%20quisiera%20una%20demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <a class="btn btn-primary" href="https://wa.me/50558196269?text=Hola%2C%20quisiera%20una%20demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener">Escribir por WhatsApp para coordinar una demostración</a>
     <div class="contact-line">
-      <b>Alvaro Dávila M</b>
       <span class="contact-tag">Innovación Educativa · Inteligencia Artificial aplicada a la Educación</span>
-      <span class="contact-details"><span id="emailText">adavilam@gmail.com</span> · <a href="tel:+50558196269">Cel: 5819 6269</a> · <a href="https://www.facebook.com/AppRubric" target="_blank" rel="noopener">Facebook: AppRubric</a></span>
+      <span class="contact-details"><a href="tel:+50558196269">Cel: 5819 6269</a> · <a href="https://www.facebook.com/AppRubric" target="_blank" rel="noopener">Facebook: AppRubric</a></span>
     </div>
   </div>
 </section>
 
 <footer class="site">AppRubric — Sistema Integral de Gestión Evaluativa · Alineado al Instructivo de Evaluación del MINED, Nicaragua</footer>
 
-<script>
-  function handleDemoClick(evt, el) {
-    var original = el.textContent;
-    var mailUrl = el.getAttribute('href');
-    var opened = false;
-    try {
-      var win = window.open(mailUrl, '_blank');
-      opened = !!win;
-    } catch (e) { opened = false; }
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText('adavilam@gmail.com').catch(function () {});
-    }
-
-    el.textContent = '✓ Correo copiado — adavilam@gmail.com';
-    setTimeout(function () { el.textContent = original; }, 3200);
-
-    // Let the mailto href continue as a normal navigation attempt too
-    // (harmless if blocked by the surrounding sandbox; the copy above
-    // is the guaranteed fallback).
-    return true;
-  }
-</script>
