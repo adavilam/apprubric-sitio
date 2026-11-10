@@ -302,6 +302,12 @@
   .contact-line .contact-details a { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 2px; }
   .contact-line .contact-details a:hover { color: var(--ink); }
 
+  .demo-card { display: grid; gap: 18px; justify-items: start; }
+  .demo-cred { display: grid; grid-template-columns: auto 1fr; gap: 8px 18px; margin: 0; font-size: 15px; }
+  .demo-cred dt { color: var(--ink-soft); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; padding-top: 2px; }
+  .demo-cred dd { margin: 0; overflow-wrap: anywhere; }
+  .demo-note { font-size: 13.5px; color: var(--ink-soft); margin: 0; max-width: 68ch; }
+
   footer.site {
     padding: 28px 0 40px; text-align: center; font-size: 12.5px; color: var(--ink-soft);
   }
@@ -337,7 +343,7 @@
     <p class="hero-sub">Un sistema construido artículo por artículo sobre el Capítulo V del MINED — diseño de instrumentos con apoyo de inteligencia artificial, cálculo automático de notas, cierre de corte, análisis de resultados y un portal para las familias. Validado en un centro educativo nicaragüense en operación real.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="https://wa.me/50558196269?text=Hola%2C%20quisiera%20una%20demostraci%C3%B3n%20de%20AppRubric" target="_blank" rel="noopener">Solicitar una demostración</a>
-      <a class="btn btn-ghost" href="#solucion">Ver cómo funciona ↓</a>
+      <a class="btn btn-ghost" href="#demo">Probar la demo ↓</a>
     </div>
 
     <div class="ledger">
@@ -557,6 +563,23 @@
       <div class="diff-item"><div class="diff-mark">✓</div><div class="diff-text"><div class="diff-head">Construido sobre la norma, no sobre un genérico</div><p>Cada regla del Instructivo de Evaluación —artículo por artículo— es parte del motor, no un ajuste posterior.</p></div></div>
       <div class="diff-item"><div class="diff-mark">✓</div><div class="diff-text"><div class="diff-head">Validado en operación real</div><p>Con datos reales, en un centro educativo nicaragüense en funcionamiento diario — no una maqueta ni un prototipo comercial.</p></div></div>
       <div class="diff-item"><div class="diff-mark">✓</div><div class="diff-text"><div class="diff-head">Nacido de necesidades reales</div><p>La gestión de excepciones, el candado de cierre de corte y la autorización de instrumentos surgieron de situaciones concretas de un colegio en funcionamiento.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="section-tag">Pruébelo usted mismo</div>
+    <h2 class="section-title display">Entre a la demo como docente</h2>
+    <p class="lede">Un salón de práctica con tres estudiantes ficticios, para crear un indicador, diseñar un instrumento y capturar notas. El cálculo de notas es el de un centro real.</p>
+    <div class="sheet demo-card">
+      <dl class="demo-cred">
+        <dt>Dirección</dt><dd><a href="https://demo.apprubric.net/app/" target="_blank" rel="noopener">demo.apprubric.net</a></dd>
+        <dt>Usuario</dt><dd class="mono">visitante@demo.apprubric.net</dd>
+        <dt>Contraseña</dt><dd class="mono">Visitante-2026</dd>
+      </dl>
+      <a class="btn btn-primary" href="https://demo.apprubric.net/app/" target="_blank" rel="noopener">Abrir la demo</a>
+      <p class="demo-note">Cuenta compartida: lo que haga lo pueden ver otros visitantes, y el salón se vacía cada madrugada. No ingrese datos reales de estudiantes. Para ver un año evaluativo completo, con Dirección y Coordinación, solicite una demostración guiada.</p>
     </div>
   </div>
 </section>
