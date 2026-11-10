@@ -16,7 +16,7 @@ Concepto: una rúbrica de 3 criterios × 4 niveles (AI, AF, AS, AA). Las cuatro 
 
 ## Publicación
 
-Se sirve desde `public_html` de la cuenta cPanel de AppRubric (dominio principal `apprubric.net`). Para actualizarlo, subir `index.html`, `favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, la carpeta `marca/` (sin `generar_marca.py`) y `.htaccess` a `public_html` con el Administrador de archivos. El subdominio `demo.apprubric.net` vive en otra carpeta y no se toca.
+Se sirve desde `public_html` de la cuenta cPanel de AppRubric (dominio principal `apprubric.net`). Para actualizarlo, subir `index.html`, `contacto.php` (formulario de contacto: envía a apprubricnic@gmail.com con PHP `mail()`), `favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, la carpeta `marca/` (sin `generar_marca.py`) y `.htaccess` a `public_html` con el Administrador de archivos. El subdominio `demo.apprubric.net` vive en otra carpeta y no se toca.
 
 La versión anterior en Vercel (`prospecto-apprubric.vercel.app`) quedó retirada.
 
